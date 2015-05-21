@@ -1,11 +1,12 @@
+var _this = this;
 //todo: include all the media types.
 var MEDIA_TYPES = ["application/json", "application/x-www-form-urlencoded", "text/plain", "text/html"];
 var ALLOWED_METHODS = ["get", "post", "put", "delete"];
 var JSSON = function (json) {
     var sson = json;
     sson.forEach = function (fun, newThis) {
-        var self = newThis || this;
-        if (this == null)
+        var self = newThis || sson;
+        if (_this == null)
             throw new TypeError('this is null or not defined');
         if (typeof fun !== "function")
             throw new TypeError(fun + " is not a function");
@@ -15,8 +16,8 @@ var JSSON = function (json) {
         }
     };
     sson.map = function (fun, newThis) {
-        var self = newThis || this, arr = [], temp;
-        if (this == null)
+        var self = newThis || sson, arr = [], temp;
+        if (_this == null)
             throw new TypeError('this is null or not defined');
         if (typeof fun !== "function")
             throw new TypeError(fun + " is not a function");
@@ -101,5 +102,5 @@ var XHR = (function () {
     return XHR;
 })();
 if (!$http)
-    $http = new XHR();
+    var $http = new XHR();
 //# sourceMappingURL=http.js.map

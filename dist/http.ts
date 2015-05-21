@@ -5,8 +5,8 @@ var ALLOWED_METHODS = ["get", "post", "put", "delete"];
 var JSSON = json => {
 	var sson = json;
 
-	sson.forEach = function (fun, newThis) {
-		var self = newThis || this;
+	sson.forEach = (fun, newThis?:Object) => {
+		var self = newThis || sson;
 
 		if (this == null)
 			throw new TypeError('this is null or not defined');
@@ -18,8 +18,8 @@ var JSSON = json => {
 		}
 	};
 
-	sson.map = function (fun, newThis) {
-		var self = newThis || this, arr = [], temp;
+	sson.map = (fun, newThis?:Object) => {
+		var self = newThis || sson, arr = [], temp;
 
 		if (this == null)
 			throw new TypeError('this is null or not defined');
@@ -34,6 +34,7 @@ var JSSON = json => {
 		}
 		return arr;
 	};
+
 	return sson;
 };
 
@@ -113,4 +114,5 @@ class XHR {
 
 }
 
-if (!$http) $http = new XHR();
+if (!$http)
+	var $http = new XHR();
