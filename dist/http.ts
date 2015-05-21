@@ -1,6 +1,6 @@
 //todo: include all the media types.
-var MEDIA_TYPES = ["application/json", "application/x-www-form-urlencoded", "text/plain", "text/html"];
-var ALLOWED_METHODS = ["get", "post", "put", "delete"];
+var MEDIA_TYPES:string[] = ["application/json", "application/x-www-form-urlencoded", "text/plain", "text/html"];
+var ALLOWED_METHODS:string[] = ["get", "post", "put", "delete"];
 
 var JSSON = json => {
 	var sson = json;
@@ -43,15 +43,29 @@ class XHR {
 
 	constructor() {
 		this.xhr = new XMLHttpRequest();
+		//todo: add the $http( ) support.
+		/**
+		 var req = {
+			call: 'POST',
+			url: 'http://example.com',
+			headers: {
+				'Content-Type': undefined
+			},
+			data: { test: 'test' }
+		}
+		 **/
+		//return (json) => {
+		//	this.call(json.call, json.url, json.data, json.headers);
+		//};
 	}
 
-	private method(method:string, url:string, data?:any, dataType?:Object, async:boolean = true):any {
+	private call(method:string, url:string, data?:any, dataType?:Object, async:boolean = true):Object {
 		var self = this;
 		self.xhr.open(method, url, async);
 
 		//todo: improve the exception implementation.
 		if (ALLOWED_METHODS.indexOf(method.toLowerCase()) < 0)
-			throw TypeError("Method not supported:\n" + "The method " + method + " is not supported");
+			throw TypeError("Method not supported:\n" + "The call " + method + " is not supported");
 
 		//todo: test consistency in the header set by the user.
 		if (dataType) JSSON(dataType).forEach((val, pro) => {
@@ -60,7 +74,7 @@ class XHR {
 
 		//For a succeeded query.
 		return {
-			"success": (successCallback:Function) => {
+			"success": (successCallback:Function):void => {
 
 				self.xhr.onreadystatechange = () => {
 					if (self.xhr.status === 200 && self.xhr.readyState === 4) {
@@ -75,7 +89,7 @@ class XHR {
 
 				//If error is present
 				return {
-					"error": (errorCallback:Function) => {
+					"error": (errorCallback:Function):void => {
 						self.xhr.onreadystatechange = () => {
 							if (self.xhr.status === 200 && self.xhr.readyState === 4) {
 								successCallback.call(this, self.xhr.response, self.xhr.getAllResponseHeaders());
@@ -89,27 +103,27 @@ class XHR {
 		};
 	}
 
-	public get(url:string, parameters:Object, data?:any, dataType?:Object, async:boolean = true):Function {
-		return this.method("GET", this.buildURL(url, parameters), data, dataType, async);
+	public get(url:string, parameters:Object, data?:any, dataType?:Object, async:boolean = true):Object {
+		return this.call("GET", this.buildURL(url, parameters), data, dataType, async);
 	}
 
-	public post(url:string, data?:any, dataType?:Object, async:boolean = true):Function {
+	public post(url:string, data?:any, dataType?:Object, async:boolean = true):Object {
 		var DEFAULT_POST_HEADER:Object = {
 			"Content-Type": "application/json"
 		};
 
-		return this.method("POST", url, data, dataType || DEFAULT_POST_HEADER, async);
+		return this.call("POST", url, data, dataType || DEFAULT_POST_HEADER, async);
 	}
 
-	public put(url:string, parameters:Object, data?:any, dataType?:Object, async:boolean = true):Function {
-		return this.method("PUT", this.buildURL(url, parameters), data, dataType, async);
+	public put(url:string, parameters:Object, data?:any, dataType?:Object, async:boolean = true):Object {
+		return this.call("PUT", this.buildURL(url, parameters), data, dataType, async);
 	}
 
-	public delete(url:string, parameters:Object, data?:any, dataType?:Object, async:boolean = true):Function {
-		return this.method("DELETE", this.buildURL(url, parameters), data, dataType, async);
+	public delete(url:string, parameters:Object, data?:any, dataType?:Object, async:boolean = true):Object {
+		return this.call("DELETE", this.buildURL(url, parameters), data, dataType, async);
 	}
 
-	//This method receives a object and writes the parameters from it.
+	//This call receives a object and writes the parameters from it.
 	private buildURL = (baseURI:string, params:Object):string => baseURI + "?" + JSSON(params).map((value, att) => att + "=" + (value.constructor === Array ? value.join(",") : value)).join("&")
 
 }

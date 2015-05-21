@@ -34,18 +34,32 @@ var JSSON = function (json) {
 };
 var XHR = (function () {
     function XHR() {
-        //This method receives a object and writes the parameters from it.
+        //This call receives a object and writes the parameters from it.
         this.buildURL = function (baseURI, params) { return baseURI + "?" + JSSON(params).map(function (value, att) { return att + "=" + (value.constructor === Array ? value.join(",") : value); }).join("&"); };
         this.xhr = new XMLHttpRequest();
+        //todo: add the $http( ) support.
+        /**
+         var req = {
+            call: 'POST',
+            url: 'http://example.com',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: { test: 'test' }
+        }
+         **/
+        //return (json) => {
+        //	this.call(json.call, json.url, json.data, json.headers);
+        //};
     }
-    XHR.prototype.method = function (method, url, data, dataType, async) {
+    XHR.prototype.call = function (method, url, data, dataType, async) {
         var _this = this;
         if (async === void 0) { async = true; }
         var self = this;
         self.xhr.open(method, url, async);
         //todo: improve the exception implementation.
         if (ALLOWED_METHODS.indexOf(method.toLowerCase()) < 0)
-            throw TypeError("Method not supported:\n" + "The method " + method + " is not supported");
+            throw TypeError("Method not supported:\n" + "The call " + method + " is not supported");
         //todo: test consistency in the header set by the user.
         if (dataType)
             JSSON(dataType).forEach(function (val, pro) {
@@ -82,22 +96,22 @@ var XHR = (function () {
     };
     XHR.prototype.get = function (url, parameters, data, dataType, async) {
         if (async === void 0) { async = true; }
-        return this.method("GET", this.buildURL(url, parameters), data, dataType, async);
+        return this.call("GET", this.buildURL(url, parameters), data, dataType, async);
     };
     XHR.prototype.post = function (url, data, dataType, async) {
         if (async === void 0) { async = true; }
         var DEFAULT_POST_HEADER = {
             "Content-Type": "application/json"
         };
-        return this.method("POST", url, data, dataType || DEFAULT_POST_HEADER, async);
+        return this.call("POST", url, data, dataType || DEFAULT_POST_HEADER, async);
     };
     XHR.prototype.put = function (url, parameters, data, dataType, async) {
         if (async === void 0) { async = true; }
-        return this.method("PUT", this.buildURL(url, parameters), data, dataType, async);
+        return this.call("PUT", this.buildURL(url, parameters), data, dataType, async);
     };
     XHR.prototype.delete = function (url, parameters, data, dataType, async) {
         if (async === void 0) { async = true; }
-        return this.method("DELETE", this.buildURL(url, parameters), data, dataType, async);
+        return this.call("DELETE", this.buildURL(url, parameters), data, dataType, async);
     };
     return XHR;
 })();
