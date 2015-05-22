@@ -36,28 +36,24 @@ var XHR = (function () {
     function XHR() {
         //This call receives a object and writes the parameters from it.
         this.buildURL = function (baseURI, params) { return baseURI + "?" + JSSON(params).map(function (value, att) { return att + "=" + (value.constructor === Array ? value.join(",") : value); }).join("&"); };
+        var self = this;
         this.xhr = new XMLHttpRequest();
-        //todo: add the $http( ) support.
-        /**
-         var req = {
-            call: 'POST',
-            url: 'http://example.com',
-            headers: {
-                'Content-Type': undefined
-            },
-            data: { test: 'test' }
-        }
-         **/
-        //return (json) => {
-        //	this.call(json.call, json.url, json.data, json.headers);
-        //};
+        var executer = function (json) { return self.call(json.method, json.url, json.data, json.headers); };
+        executer["call"] = self["call"];
+        executer["buildURL"] = self["buildURL"];
+        executer["get"] = self["get"];
+        executer["post"] = self["post"];
+        executer["put"] = self["put"];
+        executer["delete"] = self["delete"];
+        executer["xhr"] = new XMLHttpRequest();
+        //Dirty but powerful.
+        return executer;
     }
     XHR.prototype.call = function (method, url, data, dataType, async) {
         var _this = this;
         if (async === void 0) { async = true; }
         var self = this;
         self.xhr.open(method, url, async);
-        //todo: improve the exception implementation.
         if (ALLOWED_METHODS.indexOf(method.toLowerCase()) < 0)
             throw TypeError("Method not supported:\n" + "The call " + method + " is not supported");
         //todo: test consistency in the header set by the user.

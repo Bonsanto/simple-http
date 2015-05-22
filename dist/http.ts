@@ -2,7 +2,7 @@
 var MEDIA_TYPES:string[] = ["application/json", "application/x-www-form-urlencoded", "text/plain", "text/html"];
 var ALLOWED_METHODS:string[] = ["get", "post", "put", "delete"];
 
-var JSSON = json => {
+var JSSON:Function = json => {
 	var sson = json;
 
 	sson.forEach = (fun, newThis?:Object) => {
@@ -18,8 +18,10 @@ var JSSON = json => {
 		}
 	};
 
-	sson.map = (fun, newThis?:Object) => {
-		var self = newThis || sson, arr = [], temp;
+	sson.map = (fun, newThis?:Object):Array<any> => {
+		var self = newThis || sson,
+			arr:Array<any> = [],
+			temp;
 
 		if (this == null)
 			throw new TypeError('this is null or not defined');
@@ -42,28 +44,27 @@ class XHR {
 	private xhr:XMLHttpRequest;
 
 	constructor() {
+		var self = this;
 		this.xhr = new XMLHttpRequest();
-		//todo: add the $http( ) support.
-		/**
-		 var req = {
-			call: 'POST',
-			url: 'http://example.com',
-			headers: {
-				'Content-Type': undefined
-			},
-			data: { test: 'test' }
-		}
-		 **/
-		//return (json) => {
-		//	this.call(json.call, json.url, json.data, json.headers);
-		//};
+
+		var executer = (json) => self.call(json.method, json.url, json.data, json.headers);
+
+		executer["call"] = self["call"];
+		executer["buildURL"] = self["buildURL"];
+		executer["get"] = self["get"];
+		executer["post"] = self["post"];
+		executer["put"] = self["put"];
+		executer["delete"] = self["delete"];
+		executer["xhr"] = new XMLHttpRequest();
+
+		//Dirty but powerful.
+		return executer;
 	}
 
 	private call(method:string, url:string, data?:any, dataType?:Object, async:boolean = true):Object {
 		var self = this;
 		self.xhr.open(method, url, async);
 
-		//todo: improve the exception implementation.
 		if (ALLOWED_METHODS.indexOf(method.toLowerCase()) < 0)
 			throw TypeError("Method not supported:\n" + "The call " + method + " is not supported");
 
@@ -74,7 +75,7 @@ class XHR {
 
 		//For a succeeded query.
 		return {
-			"success": (successCallback:Function):void => {
+			"success": (successCallback:Function):Object => {
 
 				self.xhr.onreadystatechange = () => {
 					if (self.xhr.status === 200 && self.xhr.readyState === 4) {
