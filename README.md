@@ -1,12 +1,14 @@
 http
 ====
-`http` is a lightweight library that emulates the way how the famous angular `$http` object works.
+
+***http*** is a lightweight library that emulates the way how the famous angular `$http` object works.
 
 The library was written in TypeScript, because this language allows the use of some JS tricks and the incorporation of types and
 Lamda syntax for its function declarations.</p>
 
 How it works?
 -------------
+
 This library declares a global variable named `$http` only if it is not declared, so it will be accessible from any part of your code...
 
 ```javascript
