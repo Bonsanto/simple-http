@@ -53,11 +53,12 @@ $http.get("./Bonsanto", {
 	console.log(e);
 });
 ```
-- If ```error(...)``` is not required.
+- If ```error(...)``` is not necessary.
 
 ```javascript
 $http.get("./Bonsanto", {
 	"name": "Alberto", "lastName": "Bonsanto", "age": 24
 }).success(function (e) {
 	document.body.innerHTML += e;
-});```
+});
+```
