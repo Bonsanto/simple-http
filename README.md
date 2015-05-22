@@ -1,7 +1,8 @@
 http
 ====
-<p>`http` is a lightweight library that emulates the way how the angular `$http` object works.</p>
-<p>The library was written in TypeScript, this language allows the use of some JS tricks and the incorporation of types and
+`http` is a lightweight library that emulates the way how the famous angular `$http` object works.
+
+The library was written in TypeScript, because this language allows the use of some JS tricks and the incorporation of types and
 Lamda syntax for its function declarations.</p>
 
 How it works?
