@@ -9,14 +9,14 @@ Lamda syntax for its function declarations.</p>
 How it works?
 -------------
 
-This library declares a global variable named `$http` only if it is not declared, so it will be accessible from any part of your code...
+This library declares a global variable named `$http` only if it was not declared before, so it will be accessible from any part of your code.
 
 ```javascript
 if(!$http)
 	var $http = new XHR();
 ```
 
-It allows you to create your own XHR object, which has all the functionalities of $http...
+It allows you to create your own XHR object, which has all the functionalities of $http.
 
 ```javascript
 var http = new XHR();
