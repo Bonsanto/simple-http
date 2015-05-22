@@ -19,9 +19,9 @@ It allows you to create your own XHR object, which has all the functionalities o
 var http = new XHR();
 ```
 
-After that you can execute the requests to the server in two ways.
+After that you can make the requests `(GET, POST, DELETE or UPDATE)` to the server in two ways.
 
-- Using $http as a function.
+- Using `$http` as a function.
 ```javascript
 $http({
 	method: "POST",
@@ -36,10 +36,12 @@ $http({
 	console.log(data);
 });
 ```
-- Using the embedded $http methods.
+- Using the embedded `$http` methods.
 ```javascript
 $http.get("./Bonsanto", {
-	"name": "Dakota", "lastName": "Bonsanto", "age": 3
+	"name": "Dakota",
+	"lastName": "Bonsanto",
+	"age": 3
 }).success(function (e) {
 	document.body.innerHTML += e;
 }).error(function (e) {
