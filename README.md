@@ -51,3 +51,10 @@ $http.get("./Bonsanto", {
 	console.log(e);
 });
 ```
+- If ```javascript error(...)``` is not required.
+```javascript
+$http.get("./Bonsanto", {
+	"name": "Alberto", "lastName": "Bonsanto", "age": 24
+}).success(function (e) {
+	document.body.innerHTML += e;
+});```
