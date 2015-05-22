@@ -1,6 +1,6 @@
 #http
 
-***http*** is a lightweight library that emulates the way how the famous angular `$http` object works.
+**http** is a lightweight library that emulates the way how the famous angular `$http` object works.
 
 The library was written in TypeScript, because this language allows the use of some JS tricks and the incorporation of types and
 Lamda syntax for its function declarations.</p>
@@ -14,13 +14,13 @@ if(!$http)
 	var $http = new XHR();
 ```
 
-It allows you to create your own XHR object, which has all the functionalities of $http.
+It allows you to create your own XHR object, which has all the functionalities of `$http`.
 
 ```javascript
 var http = new XHR();
 ```
 
-After that you can make the requests `(GET, POST, DELETE or UPDATE)` to the server in two ways.
+After that you can make the requests `(GET, POST, DELETE or UPDATE)` to the server in three ways.
 
 
 - Using `$http` as a function.
