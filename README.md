@@ -40,7 +40,7 @@ $http({
 });
 ```
 
-- Using the embedded `$http` methods. If header is not set it supposes that a JSON will be send.  
+- Using the embedded `$http` methods. If the header is not passed as argument, then the library supposes that a **JSON** will be sent.  
 
 ```javascript
 $http.get("./Bonsanto", {
