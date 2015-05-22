@@ -25,6 +25,7 @@ var http = new XHR();
 After that you can make the requests `(GET, POST, DELETE or UPDATE)` to the server in two ways.
 
 - Using `$http` as a function.
+
 ```javascript
 $http({
 	method: "POST",
@@ -40,6 +41,7 @@ $http({
 });
 ```
 - Using the embedded `$http` methods.
+
 ```javascript
 $http.get("./Bonsanto", {
 	"name": "Dakota",
@@ -51,7 +53,8 @@ $http.get("./Bonsanto", {
 	console.log(e);
 });
 ```
-- If ```javascript error(...)``` is not required.
+- If ```error(...)``` is not required.
+
 ```javascript
 $http.get("./Bonsanto", {
 	"name": "Alberto", "lastName": "Bonsanto", "age": 24
