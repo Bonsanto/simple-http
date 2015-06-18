@@ -1,9 +1,23 @@
-#http
+#simple-http
 
-**http** is a lightweight library that emulates the way how the famous angular `$http` object works.
+**simple-http** is a lightweight library that emulates the way how the famous angular `$http` object works.
 
 The library was written in TypeScript, because this language allows the use of some JS tricks and the incorporation of types and
 Lamda syntax for its function declarations.</p>
+
+##Setup & install simple-http
+
+This library is really easy to install just execute the next command:
+
+```
+	bower install simple-http
+```
+
+After this you iwll be able to include the ```http.js``` in yout client project.
+
+```html
+	<script src="bower_components/simple-http/dist/http.json"></script>"
+```
 
 ##How it works?
 

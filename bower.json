@@ -1,0 +1,21 @@
+{
+  "name": "simple-http",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Bonsanto/-http",
+  "authors": [
+    "Bonsanto <xbonsx@gmail.com>"
+  ],
+  "description": "A simple and lightweight library that emulates some functionalities of the famous angular's object $http.",
+  "main": "http.js",
+  "keywords": [
+    "http",
+    "ajax",
+    "simple-http",
+    "get",
+    "post",
+    "delete",
+    "update",
+    "rest"
+  ],
+  "license": "MIT"
+}
