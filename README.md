@@ -16,7 +16,7 @@ bower install simple-http
 After this you iwll be able to include the ```http.js``` in yout client project.
 
 ```html
-<script src="bower_components/simple-http/dist/http.json"></script>"
+<script src="bower_components/simple-http/dist/http.js"></script>"
 ```
 
 ##How it works?
