@@ -8,7 +8,7 @@ var JSSON:Function = json => {
 	sson.forEach = (fun, newThis?:Object) => {
 		var self = newThis || sson;
 
-		if (this == null)
+		if (self == null)
 			throw new TypeError('this is null or not defined');
 		if (typeof fun !== "function")
 			throw new TypeError(fun + " is not a function");
@@ -23,7 +23,7 @@ var JSSON:Function = json => {
 			arr:Array<any> = [],
 			temp;
 
-		if (this == null)
+		if (self == null)
 			throw new TypeError('this is null or not defined');
 		if (typeof fun !== "function")
 			throw new TypeError(fun + " is not a function");
@@ -85,7 +85,17 @@ class XHR {
 					}
 				};
 
-				//If data was passed send it, some people use get, put, delete to send data...:(.
+				//If the data passed is a JSON and the dataType is an x-www ... convert the json to a string
+				//Todo: needs improvement for arrays, objects and others.
+				if (data.constructor.name === "Object" &&
+					dataType === "application/x-www-form-urlencoded") {
+					data = JSSON(data)
+						.map((value:any, key:string) =>
+							key.concat("=").concat(value))
+						.join("&");
+				}
+
+				//If data was passed send it, some people use get, put, delete to send data...:(
 				data ? self.xhr.send(data) : self.xhr.send();
 
 				//If error is present

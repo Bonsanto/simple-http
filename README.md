@@ -13,7 +13,7 @@ This library is really easy to install just execute the next command:
 bower install simple-http
 ```
 
-After this you iwll be able to include the ```http.js``` in yout client project.
+After this you will be able to include the ```http.js``` in yout client project.
 
 ```html
 <script src="bower_components/simple-http/dist/http.js"></script>"

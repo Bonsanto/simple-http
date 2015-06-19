@@ -1,4 +1,3 @@
-var _this = this;
 //todo: include all the media types.
 var MEDIA_TYPES = ["application/json", "application/x-www-form-urlencoded", "text/plain", "text/html"];
 var ALLOWED_METHODS = ["get", "post", "put", "delete"];
@@ -6,7 +5,7 @@ var JSSON = function (json) {
     var sson = json;
     sson.forEach = function (fun, newThis) {
         var self = newThis || sson;
-        if (_this == null)
+        if (self == null)
             throw new TypeError('this is null or not defined');
         if (typeof fun !== "function")
             throw new TypeError(fun + " is not a function");
@@ -17,7 +16,7 @@ var JSSON = function (json) {
     };
     sson.map = function (fun, newThis) {
         var self = newThis || sson, arr = [], temp;
-        if (_this == null)
+        if (self == null)
             throw new TypeError('this is null or not defined');
         if (typeof fun !== "function")
             throw new TypeError(fun + " is not a function");
@@ -72,7 +71,12 @@ var XHR = (function () {
                         throw Error("Data not received:\n" + "Details: " + self.xhr.statusText);
                     }
                 };
-                //If data was passed send it, some people use get, put, delete to send data...:(.
+                //If the data passed is a JSON and the dataType is an x-www ... convert the json to a string
+                //Todo: needs improvement for arrays, objects and others.
+                if (data.constructor.name === "Object" && dataType === "application/x-www-form-urlencoded") {
+                    data = JSSON(data).map(function (value, key) { return key.concat("=").concat(value); }).join("&");
+                }
+                //If data was passed send it, some people use get, put, delete to send data...:(
                 data ? self.xhr.send(data) : self.xhr.send();
                 //If error is present
                 return {
