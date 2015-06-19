@@ -68,15 +68,15 @@ $http.get("./Bonsanto", {
 	console.log(e);
 });
 ```
-- Using the embedded `$http`, you save a lot of time, because if you need to pass an `application/x-www-form-urlencoded`, you don't need to format it, passing a **JSON** is enough.
+- Using the embedded `$http`, you save a lot of time, because if you need to send an `application/x-www-form-urlencoded`, if you define it the lib will parse the **JSON** and convert it to a **string**.
 
 ```javascript
 $http.post("./Endpoint", {
 	"Content-Type": "application/x-www-form-urlencoded"
-}, {
+},{
 	"name": "Alberto", 
-	"lastName": "Dakota", 
-	"age": 24
+	"lastName": "Dakota", //Interenally converted to => name=Alberto&lastName=Dakota&scores=10,9,10,10
+	"scores": [10, 9, 10, 10]
 }).success(function (e) {
 	document.body.innerHTML += e;
 });
