@@ -54,7 +54,8 @@ $http({
 });
 ```
 
-- Using the embedded `$http` methods. If the header is not passed as argument, then the library supposes that a **JSON** will be sent.  
+- Using the embedded `$http` methods. If the header is not passed as argument, then the library supposes that a **JSON** will be sent.
+*Note*: The error method is not necessary.
 
 ```javascript
 $http.get("./Bonsanto", {
@@ -67,10 +68,12 @@ $http.get("./Bonsanto", {
 	console.log(e);
 });
 ```
-- If ```error(...)``` is not necessary.
+- Using the embedded `$http`, you save a lot of time, because if you need to pass an `application/x-www-form-urlencoded`, you don't need to format it, passing a **JSON** is enough.
 
 ```javascript
-$http.get("./Bonsanto", {
+$http.post("./Endpoint", {
+	"Content-Type": "application/x-www-form-urlencoded"
+}, {
 	"name": "Alberto", 
 	"lastName": "Dakota", 
 	"age": 24

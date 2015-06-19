@@ -88,7 +88,7 @@ class XHR {
 				//If the data passed is a JSON and the dataType is an x-www ... convert the json to a string
 				//Todo: needs improvement for arrays, objects and others.
 				if (data.constructor.name === "Object" &&
-					dataType === "application/x-www-form-urlencoded") {
+					dataType["Content-Type"] === "application/x-www-form-urlencoded") {
 					data = JSSON(data)
 						.map((value:any, key:string) =>
 							key.concat("=").concat(value))
