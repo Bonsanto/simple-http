@@ -93,6 +93,9 @@ class XHR {
 						.map((value:any, key:string) =>
 							key.concat("=").concat(value))
 						.join("&");
+				} else if (data.constructor.name === "Object" &&
+					dataType["Content-Type"] === "application/json") {
+					data = JSON.stringify(data);
 				}
 
 				//If data was passed send it, some people use get, put, delete to send data...:(

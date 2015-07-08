@@ -76,6 +76,9 @@ var XHR = (function () {
                 if (data.constructor.name === "Object" && dataType["Content-Type"] === "application/x-www-form-urlencoded") {
                     data = JSSON(data).map(function (value, key) { return key.concat("=").concat(value); }).join("&");
                 }
+                else if (data.constructor.name === "Object" && dataType["Content-Type"] === "application/json") {
+                    data = JSON.stringify(data);
+                }
                 //If data was passed send it, some people use get, put, delete to send data...:(
                 data ? self.xhr.send(data) : self.xhr.send();
                 //If error is present
